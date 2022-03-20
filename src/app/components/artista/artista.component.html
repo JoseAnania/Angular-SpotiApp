@@ -1,0 +1,54 @@
+<!-- HTML creado -->
+
+<!-- Cargamos el componente LOADING con el NG IF para mostrarlo o no-->
+<app-loading *ngIf="loadingArtista"></app-loading>
+
+<div class="row animated fadeIn" *ngIf="!loadingArtista">
+    <!-- obtenemos la imagen del artista seleccionado -->
+    <div class="col-2">
+        <img [src]="artista.images | noimage" class="img-thumbnail img-circle">
+    </div>
+    <!-- obtenemos los datos del artista seleccionado -->
+    <div class="col">
+        <h3> {{ artista.name }} </h3>
+        <p>
+            <a [href]="artista.external_urls.spotify" target="_blank">
+                Ir a la página del artista
+            </a>
+        </p>
+    </div>
+    <!-- Botón regresar -->
+    <div class="col-4" style="float: right;">
+        <button routerLink="/search" class="btn btn-outline-danger">
+            Regresar
+        </button> 
+    </div>
+</div>
+<!-- Construimos la tabla para mostrar los Top Tracks del artista seleccionado con NG FOR -->
+<div class="row m-5">
+    <div class="col">
+        <div class="table">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Album</th>
+                    <th>Canción</th>
+                    <th>Vista Previa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let track of topTracks">
+                    <th>
+                        <img [src]="track.album.images | noimage" class="img-thumb">
+                    </th>
+                    <th>{{ track.album.name }}</th>
+                    <th>{{ track.name }}</th>
+                    <th>
+                        <!--<audio [src]="track.preview_url" controls></audio>-->
+                        <iframe [src]="track.id | domseguro:'https://open.spotify.com/embed/track/'" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </th>
+                </tr>
+            </tbody>
+        </div>
+    </div>
+</div>

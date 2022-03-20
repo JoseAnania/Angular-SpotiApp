@@ -1,0 +1,26 @@
+<!-- HTML creado -->
+
+<div class="row">
+    <div class="col">
+        <!-- Disparamos la función del buscador (buscar) con las teclas (keyup) que se encuentra en SEARCH.COMPONENT.TS-->
+        <input #termino type="text" (keyup)="buscar(termino.value)" class="form-control" placeholder="Buscar Artista...">
+    </div>
+</div>
+<br>
+
+<!-- Llamamos al COMPONENTE Loading. Usamos NG IF para mostrarlo o no-->
+<app-loading *ngIf="loading"></app-loading>
+
+
+<!-- BOOTSTRAP (cards). Usamos NG FOR para duplicar las cards por la cantidad de Busqueda de Artistas -->
+<div *ngIf="!loading" class="row row-cols-1 row-cols-md-4 g-4">
+    <!-- Agregamos el evento CLICK para acceder a de la tarjeta al Artista (a través del método VerArtista). Y agregamos el estilo "puntero" para el cursor -->
+    <div (click)="verArtista( artista )" *ngFor="let artista of artistas"  class="col puntero">
+      <div class="card">
+        <!-- Usamos el PIPE personalizado por si la búsqueda nos trae resultados sin imágenes -->
+        <img [src]="artista.images | noimage" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ artista.name }}</h5>
+        </div>
+      </div>
+    </div>
